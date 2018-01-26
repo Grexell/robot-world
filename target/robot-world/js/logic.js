@@ -1,7 +1,8 @@
 var comands = [];
 
 $(document).ready(function () {
-    var webSocket = new WebSocket('ws://127.0.0.1:8080/messages');
+    var url = "ws://" + document.location.host + document.location.pathname.substring(0, document.location.pathname.lastIndexOf('/')) + '/message';
+    var webSocket = new WebSocket(url);
 
     webSocket.onmessage = function (ev) {
         var response = JSON.parse(ev.data);
@@ -32,7 +33,7 @@ $(document).ready(function () {
                     on: {
                         click: function (){
                             $.ajax({
-                                url : '/api/robot/'+ response.robot.name + '/' + this.value,
+                                url : 'api/robot/'+ response.robot.name + '/' + this.value,
                                 datatype : 'json',
                                 type : "post",
                                 contentType : "application/json"
@@ -52,7 +53,7 @@ $(document).ready(function () {
                         on: {
                             click: function (){
                                 $.ajax({
-                                    url : '/api/robots/commands/' + this.value,
+                                    url : 'api/robots/commands/' + this.value,
                                     datatype : 'json',
                                     type : "post",
                                     contentType : "application/json"
@@ -81,7 +82,7 @@ $(document).ready(function () {
         var name = $("#robot-name").val();
 
         $.ajax({
-            url : '/api/robots/add/' + type + '/' + name,
+            url : 'api/robots/add/' + type + '/' + name,
             datatype : 'json',
             type : "post",
             contentType : "application/json"
