@@ -3,7 +3,7 @@ Robot world is a web application which represents the game world consisting of r
 This project is written in Java.
 ## Instalation
 To install application to the web-server you need to deploy [robot-world.war](https://github.com/Grexell/robot-world/blob/master/target/robot-world.war).
-***
+
 You also can download source code which is located in the catalog [src](https://github.com/Grexell/robot-world/tree/master/src).
 ## Creating a robot
 To create a robot you need to extend [by.jazzteam.model.robots.Robot](https://github.com/Grexell/robot-world/blob/master/src/main/java/by/jazzteam/model/robots/Robot.java). At this point you will get prepared  version of robot with a single task ***Kill***. You can add new tasks or implement any logic. To add new task you need to code something like this:
