@@ -1,13 +1,12 @@
 package by.jazzteam.model.pool;
 
 import by.jazzteam.model.listeners.PoolTracker;
-import by.jazzteam.model.listeners.RemoveRobotLIstener;
+import by.jazzteam.model.listeners.RemoveRobotListener;
 import by.jazzteam.model.listeners.RobotConfigListener;
 import by.jazzteam.model.listeners.RobotPoolListener;
 import by.jazzteam.model.robots.Robot;
 
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
@@ -37,7 +36,7 @@ public class RobotPool {
         poolListeners = new LinkedList<>();
 
         poolListeners.add(new RobotConfigListener(new PoolTracker()));
-        poolListeners.add(new RobotConfigListener(new RemoveRobotLIstener()));
+        poolListeners.add(new RobotConfigListener(new RemoveRobotListener()));
     }
 
     public int size() {

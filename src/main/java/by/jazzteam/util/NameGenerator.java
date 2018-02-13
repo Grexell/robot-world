@@ -7,7 +7,7 @@ import java.util.Set;
 
 public class NameGenerator {
 
-    private static String NAME_LIST_FILENAME = "by.jazzteam.resources.names.NameList";
+    public static final String NAME_LIST_FILENAME = "by.jazzteam.resources.names.NameList";
 
     public static int MIN_VALUE = 5;
     public static int MAX_VALUE = 50;

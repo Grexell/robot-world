@@ -35,6 +35,10 @@ public class Warrior extends Robot {
     }
 
     public void setDamage(int damage) {
-        this.damage = damage;
+        if (damage >= 0) {
+            this.damage = damage;
+        } else {
+            throw new IllegalArgumentException();
+        }
     }
 }

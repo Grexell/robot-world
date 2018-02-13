@@ -1,15 +1,13 @@
 package by.jazzteam.controller;
 
-import by.jazzteam.model.listeners.RemoveRobotLIstener;
-import by.jazzteam.model.listeners.RobotConfigListener;
 import by.jazzteam.model.pool.RobotPool;
-        import by.jazzteam.model.robots.Robot;
-        import by.jazzteam.util.RobotCreator;
-        import org.springframework.http.HttpStatus;
-        import org.springframework.http.ResponseEntity;
-        import org.springframework.web.bind.annotation.PathVariable;
-        import org.springframework.web.bind.annotation.PostMapping;
-        import org.springframework.web.bind.annotation.RestController;
+import by.jazzteam.model.robots.Robot;
+import by.jazzteam.util.RobotCreator;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class RobotWorldRestController {

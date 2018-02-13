@@ -1,6 +1,5 @@
 package by.jazzteam.model.tasks;
 
-import by.jazzteam.model.pool.RobotPool;
 import by.jazzteam.model.robots.Robot;
 
 public class KillTask extends Task {
@@ -9,12 +8,9 @@ public class KillTask extends Task {
 
     private Robot robot;
 
-    private RobotPool pool;
-
-    public KillTask(String name, Robot robot, RobotPool pool) {
+    public KillTask(String name, Robot robot) {
         super(name);
         this.robot = robot;
-        this.pool = pool;
     }
 
     @Override

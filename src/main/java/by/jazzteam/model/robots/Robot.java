@@ -1,12 +1,13 @@
 package by.jazzteam.model.robots;
 
-import by.jazzteam.model.pool.RobotPool;
 import by.jazzteam.model.listeners.RobotTaskAddListener;
 import by.jazzteam.model.listeners.RobotTaskExecutionListener;
 import by.jazzteam.model.tasks.KillTask;
 import by.jazzteam.model.tasks.Task;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.TimeUnit;
@@ -29,14 +30,14 @@ public class Robot implements Runnable{
     private BlockingQueue<Task> taskQueue;
 
     /*
-        List of RobotTaskExecutionlistener
+        Set of RobotTaskExecutionlistener
      */
-    private List<RobotTaskExecutionListener> robotTaskExecutionListenerList;
+    private Set<RobotTaskExecutionListener> robotTaskExecutionListenerList;
 
     /*
-        List of RobotTaskAddListener
+        Set of RobotTaskAddListener
      */
-    private List<RobotTaskAddListener> robotTaskAddListeners;
+    private Set<RobotTaskAddListener> robotTaskAddListeners;
 
     /*
         Robot's life cycle
@@ -55,16 +56,17 @@ public class Robot implements Runnable{
     private Thread executionThread;
 
     public Robot() {
+        name = "";
         alive = true;
 
         taskList = new HashMap<>();
-        Task task = new KillTask("Kill",this, RobotPool.getRobotPool());
+        Task task = new KillTask("Kill",this);
         taskList.put(task.getName(), task);
 
         taskQueue = new LinkedBlockingQueue<>();
 
-        robotTaskExecutionListenerList = new LinkedList<>();
-        robotTaskAddListeners = new LinkedList<>();
+        robotTaskExecutionListenerList = new HashSet<>();
+        robotTaskAddListeners = new HashSet<>();
 
         executionThread = new Thread(this);
         executionThread.start();
@@ -95,30 +97,38 @@ public class Robot implements Runnable{
         return taskQueue.size();
     }
 
-    public void addTaskAddListener(RobotTaskAddListener robotTaskAddListener) {
-        robotTaskAddListeners.add(robotTaskAddListener);
+    public boolean addTaskAddListener(RobotTaskAddListener robotTaskAddListener) {
+        return robotTaskAddListeners.add(robotTaskAddListener);
     }
 
-    public void removeTaskAddListener(RobotTaskAddListener robotTaskAddListener) {
-        robotTaskAddListeners.remove(robotTaskAddListener);
+    public boolean removeTaskAddListener(RobotTaskAddListener robotTaskAddListener) {
+        return robotTaskAddListeners.remove(robotTaskAddListener);
     }
 
 
-    public void addTaskExecutionListener(RobotTaskExecutionListener robotTaskExecutionListener) {
-        robotTaskExecutionListenerList.add(robotTaskExecutionListener);
+    public boolean addTaskExecutionListener(RobotTaskExecutionListener robotTaskExecutionListener) {
+        return robotTaskExecutionListenerList.add(robotTaskExecutionListener);
     }
 
-    public void removeTaskExecutionListener(RobotTaskExecutionListener robotTaskExecutionListener) {
-        robotTaskExecutionListenerList.remove(robotTaskExecutionListener);
+    public boolean removeTaskExecutionListener(RobotTaskExecutionListener robotTaskExecutionListener) {
+        return robotTaskExecutionListenerList.remove(robotTaskExecutionListener);
     }
 
     public boolean addTask(String name){
-        boolean result = taskQueue.add(taskList.get(name));
 
-        if (result) {
-            for (RobotTaskAddListener robotTaskAddListener: robotTaskAddListeners) {
-                robotTaskAddListener.onAddTask(this, taskList.get(name));
+        Task addTask = taskList.get(name);
+
+        boolean result = false;
+
+        if (null != addTask) {
+            result = taskQueue.add(taskList.get(name));
+
+            if (result) {
+                for (RobotTaskAddListener robotTaskAddListener: robotTaskAddListeners) {
+                    robotTaskAddListener.onAddTask(this, taskList.get(name));
+                }
             }
+
         }
 
         return result;
